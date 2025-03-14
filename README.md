@@ -1,5 +1,5 @@
 # LeetPeek
-LeetPeek is a simple tool that fetches all the relevant interview experiences of a company from leetcode
+LeetPeek is a tool that fetches all the relevant interview experiences or compensation details of a company from leetcode
 
 ## Installation
 ```bash
@@ -22,7 +22,11 @@ The output will be saved in the `articles/<company_name>` directory.
 ## Advanced Usage
 ```bash
 python leetpeek.py --company <company_name> --thresh <threshold>
+python leetpeek.py --company <company_name> --type <type>
 ```
 
-## Threshold
+#### Threshold
 The threshold is the minimum number of characters in the interview experience. Default is 500.
+
+#### Type
+The type can be either `interview` or `compensation`. Default is `interview`.

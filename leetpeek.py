@@ -1,15 +1,20 @@
 import requests, json, os, time, argparse, shutil
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+from enum import Enum
 
 endpoint = 'https://leetcode.com/graphql'
 
-parser = argparse.ArgumentParser(description="Arguments for leetcode interview experience crawler")
+class ArticleType(Enum):
+    INTERVIEW = "interview"
+    COMPENSATION = "compensation"
+
+parser = argparse.ArgumentParser(description="Arguments for leetcode interview experience or compensation details crawler")
 parser.add_argument(
     "--company", 
     type=str, 
     default="tessell", 
-    help="Company name in lowercase for which you want to get the interview experiences"
+    help="Company name in lowercase for which you want to get the interview experiences or compensation details"
 )
 
 parser.add_argument(
@@ -19,11 +24,20 @@ parser.add_argument(
     help="Skip all the interview experiences if they are less than this threshold value. Default is 500"
 )
 
+parser.add_argument(
+    "--type",
+    type=str,
+    choices=[t.value for t in ArticleType],
+    default=ArticleType.INTERVIEW.value,
+    help="Type of articles to crawl: 'interview' or 'compensation'"
+)
+
 args = parser.parse_args()
 
 company = args.company
 interview_min_char_length = args.thresh
-company_dir = f"articles/{company}"
+articlesType = args.type
+company_dir = f"articles/{company}_{articlesType}"
 metadata_file_path = f"{company_dir}/metadata.json"
 
 # Defining the graphql queries
@@ -264,7 +278,7 @@ def crawl(last_article_updated_at = None):
                 company
             ],
             "tagSlugs": [
-                "interview"
+                articlesType
             ],
             "skip": skip,
             "first": page_size
