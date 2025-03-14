@@ -19,6 +19,10 @@ python leetpeek.py --company google
 ## Output
 The output will be saved in the `articles/<company_name>` directory.
 
+
+https://github.com/user-attachments/assets/0f11c91a-e7d8-4954-b902-edce771ed4a6
+
+
 ## Advanced Usage
 ```bash
 python leetpeek.py --company <company_name> --thresh <threshold>
